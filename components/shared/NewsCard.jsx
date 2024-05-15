@@ -31,9 +31,7 @@ const NewsCard = ({}) => {
         className="truncate line-clamp-2"
       >
         US to send F-16 fighter jets to Gulf amid Iran shipping tensions Lorem
-        ipsum dolor sit amet consectetur adipisicing elit. Deserunt possimus
-        soluta omnis expedita inventore asperiores eveniet obcaecati numquam
-        esse sapiente!
+        ipsum dolor sit amet consectetur adipisicing elit.
       </Text>
     </TouchableOpacity>
   );
