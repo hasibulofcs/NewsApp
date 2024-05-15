@@ -1,8 +1,9 @@
 import React from "react";
-import { View, TouchableOpacity, Text, Pressable } from "react-native";
+import { View, Text, Pressable, StyleSheet } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { SvgXml } from "react-native-svg";
 import { BottomNavigationContent } from "../../data/Shared";
+import { FontStyles } from "../../constants/FontStyles";
 
 const TabBar = ({ state, descriptors, navigation }) => {
   const focusedOptions = descriptors[state.routes[state.index].key].options;
@@ -14,8 +15,8 @@ const TabBar = ({ state, descriptors, navigation }) => {
 
   return (
     <View
-      style={{ flexDirection: "row", backgroundColor: "#fff" }}
-      className="px-2 py-4"
+      style={styles.TabContainer}
+      className="px-2 h-[72px] items-center justify-center"
     >
       {state.routes.map((route, index) => {
         const { options } = descriptors[route.key];
@@ -66,6 +67,7 @@ const TabBar = ({ state, descriptors, navigation }) => {
                     style={{
                       height: 28,
                       width: 28,
+                      transform: isFocused ? [{ scale: 0.85 }] : [{ scale: 1 }],
                     }}
                   />
                 )}
@@ -73,7 +75,12 @@ const TabBar = ({ state, descriptors, navigation }) => {
             ))}
 
             {isFocused ? (
-              <Text className="text-white text-xs">{label}</Text>
+              <Text
+                className="text-white text-xs"
+                style={FontStyles.InterRegular12}
+              >
+                {label}
+              </Text>
             ) : (
               <></>
             )}
@@ -83,5 +90,19 @@ const TabBar = ({ state, descriptors, navigation }) => {
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  TabContainer: {
+    shadowRadius: 2,
+    shadowOffset: {
+      width: 0,
+      height: -30,
+    },
+    shadowColor: "#000000",
+    elevation: 20,
+    flexDirection: "row",
+    backgroundColor: "#fff",
+  },
+});
 
 export default TabBar;
