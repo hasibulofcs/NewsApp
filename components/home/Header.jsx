@@ -54,6 +54,7 @@ const Header = () => {
               overflow: "hidden",
             }}
             className="flex items-center justify-center"
+            onPress={handlePress}
           >
             <SvgXml xml={Search} style={{ height: 20, width: 20 }} />
           </Pressable>
@@ -72,11 +73,12 @@ const Header = () => {
               overflow: "hidden",
             }}
             className="flex items-center justify-center relative"
+            onPress={handlePress}
           >
             <SvgXml xml={Notifications} style={{ height: 20, width: 20 }} />
 
             {/* NEW NOTIFICATION INDICATOR */}
-            <View className="bg-primary-red h-2 w-2 absolute top-[3px] right-[3px] rounded-full"></View>
+            <View className="bg-primary-red h-2 w-2 absolute top-[3px] right-[3px] rounded-full" />
           </Pressable>
         </View>
       </View>
