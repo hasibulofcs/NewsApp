@@ -3,15 +3,22 @@ import React from "react";
 import { TemporaryImage } from "../../constants/Images";
 import BackgroundImage from "./BackgroundImage";
 import { FontStyles } from "../../constants/FontStyles";
+import { dateTimeStringToDate } from "../../hooks/DateConverter";
 
-const NewsCard = ({}) => {
+const NewsCard = ({ cardData, marginT, marginB, marginS, marginE }) => {
   return (
     <TouchableOpacity
       activeOpacity={0.75}
       className="rounded-2xl mx-4 p-4 bg-white"
+      style={{
+        marginStart: marginS,
+        marginTop: marginT,
+        marginEnd: marginE,
+        marginBottom: marginB,
+      }}
     >
       <View className="overflow-hidden rounded-xl" style={{ height: 146 }}>
-        <BackgroundImage source={TemporaryImage} />
+        <BackgroundImage remoteSrc={cardData.urlToImage} />
       </View>
 
       <View
@@ -19,10 +26,10 @@ const NewsCard = ({}) => {
         style={{ marginTop: 10 }}
       >
         <Text style={FontStyles.InterMedium12} className="text-primary-blue">
-          The New york Times
+          {cardData?.author}
         </Text>
         <Text style={FontStyles.InterRegular12} className="text-slate-600">
-          19.02.2023
+          {dateTimeStringToDate(cardData.publishedAt)}
         </Text>
       </View>
 
@@ -30,8 +37,7 @@ const NewsCard = ({}) => {
         style={[FontStyles.InterBold14, { marginTop: 16 }]}
         className="truncate line-clamp-2"
       >
-        US to send F-16 fighter jets to Gulf amid Iran shipping tensions Lorem
-        ipsum dolor sit amet consectetur adipisicing elit.
+        {cardData.title}
       </Text>
     </TouchableOpacity>
   );
