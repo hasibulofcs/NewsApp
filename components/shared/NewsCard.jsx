@@ -5,16 +5,26 @@ import { FontStyles } from "../../constants/FontStyles";
 import { dateTimeStringToDate } from "../../hooks/DateConverter";
 import { PlaceholderImage } from "../../constants/Images";
 
-const NewsCard = ({ cardData, marginT, marginB, marginS, marginE }) => {
+const NewsCard = ({
+  cardData,
+  marginT,
+  marginB,
+  marginS,
+  marginE,
+  isHorizontal,
+}) => {
   return (
     <TouchableOpacity
       activeOpacity={0.75}
-      className="rounded-2xl mx-4 p-4 bg-white"
+      className={`rounded-2xl mx-4 ${
+        isHorizontal ? "p-0 bg-transparent" : "p-4 bg-white"
+      }`}
       style={{
         marginStart: marginS,
         marginTop: marginT,
         marginEnd: marginE,
         marginBottom: marginB,
+        width: isHorizontal ? 275 : "auto",
       }}
     >
       {!cardData?.urlToImage ? (

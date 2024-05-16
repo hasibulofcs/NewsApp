@@ -5,6 +5,7 @@ import { StatusBar } from "expo-status-bar";
 import Header from "../components/home/Header";
 import TopNews from "../components/home/TopNews";
 import NewsPortalCarousel from "../components/home/NewsPortalCarousel";
+import BreakingNews from "../components/home/BreakingNews";
 
 const HomeScreen = () => {
   return (
@@ -15,6 +16,7 @@ const HomeScreen = () => {
         <View className="flex-1">
           <ScrollView className="">
             <NewsPortalCarousel />
+            <BreakingNews />
             <TopNews />
           </ScrollView>
         </View>

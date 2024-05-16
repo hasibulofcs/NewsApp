@@ -3,6 +3,7 @@ import Carousel from "react-native-reanimated-carousel";
 import { useRef, useState } from "react";
 import BackgroundImage from "../shared/BackgroundImage";
 import { NewPortalImages } from "../../constants/Images";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 const PAGE_WIDTH = Dimensions.get("window").width;
 
@@ -41,26 +42,29 @@ const NewsPortalCarousel = () => {
         height: 200,
       }}
     >
-      <Carousel
-        ref={ref}
-        {...baseOptions}
-        style={{
-          width: PAGE_WIDTH,
-        }}
-        loop
-        pagingEnabled={true}
-        snapEnabled={true}
-        autoPlay={true}
-        scrollAnimationDuration={2500}
-        // onSnapToItem={(index) => console.log("current index:", index)}
-        mode="parallax"
-        modeConfig={{
-          parallaxScrollingScale: 0.9,
-          parallaxScrollingOffset: 50,
-        }}
-        data={[...new Array(3).keys()]}
-        renderItem={({ index }) => <CarousalItem index={index} />}
-      />
+      <GestureHandlerRootView>
+        <Carousel
+          ref={ref}
+          {...baseOptions}
+          style={{
+            width: PAGE_WIDTH,
+          }}
+          maxScrollDistancePerSwipe={300}
+          loop
+          pagingEnabled={false}
+          snapEnabled={true}
+          autoPlay={true}
+          scrollAnimationDuration={2500}
+          // onSnapToItem={(index) => console.log("current index:", index)}
+          mode="parallax"
+          modeConfig={{
+            parallaxScrollingScale: 0.9,
+            parallaxScrollingOffset: 50,
+          }}
+          data={[...new Array(3).keys()]}
+          renderItem={({ index }) => <CarousalItem index={index} />}
+        />
+      </GestureHandlerRootView>
     </View>
   );
 };

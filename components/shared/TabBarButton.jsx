@@ -11,10 +11,10 @@ const TabBarButton = ({ item, onPress, accessibilityState }) => {
   useEffect(() => {
     if (focused) {
       viewRef.current.animate({ 0: { scale: 0 }, 1: { scale: 1 } });
-      textViewRef.current.animate({ 0: { scale: 0 }, 1: { scale: 1 } });
+      // textViewRef.current.animate({ 0: { scale: 0 }, 1: { scale: 1 } });
     } else {
       viewRef.current.animate({ 0: { scale: 1 }, 1: { scale: 0 } });
-      textViewRef.current.animate({ 0: { scale: 1 }, 1: { scale: 0 } });
+      // textViewRef.current.animate({ 0: { scale: 1 }, 1: { scale: 0 } });
     }
   }, [focused]);
 
