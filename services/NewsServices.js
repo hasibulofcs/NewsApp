@@ -7,7 +7,7 @@ export const newsApi = createApi({
   endpoints: (builder) => ({
     getTopNewsForAllCategory: builder.query({
       query: () =>
-        `top-headlines?country=us&pageSize=10&page=1&apiKey=${API_KEY}`,
+        `top-headlines?country=us&pageSize=20&page=1&apiKey=${API_KEY}`,
     }),
   }),
 });

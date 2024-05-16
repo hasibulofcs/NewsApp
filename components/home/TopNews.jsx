@@ -5,15 +5,20 @@ import {
   ScrollView,
   ActivityIndicator,
 } from "react-native";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { FontStyles } from "../../constants/FontStyles";
 import NewsCard from "../shared/NewsCard";
 import { useGetTopNewsForAllCategoryQuery } from "../../services/NewsServices";
 import Colors from "../../constants/Colors";
 
 const TopNews = () => {
-  const { refetch, isError, isLoading, data } =
+  const [allNews, setAllNews] = useState([]);
+  const { refetch, error, isLoading, data } =
     useGetTopNewsForAllCategoryQuery();
+
+  useEffect(() => {
+    setAllNews(data?.articles.filter((item) => item.title !== "[Removed]"));
+  }, [data]);
 
   return (
     <View className="flex-1">
@@ -41,7 +46,7 @@ const TopNews = () => {
         </View>
       )}
 
-      {isError && (
+      {error && (
         <View className="flex-1 items-center justify-center">
           <Text>Something looks wrong!</Text>
           <View className="rounded-md bg-secondary-dark mt-2">
@@ -56,21 +61,24 @@ const TopNews = () => {
         </View>
       )}
 
+      {allNews?.length == 0 && (
+        <View className="flex-1 items-center justify-center">
+          <Text style={FontStyles.InterBold14}>Not enough data to show!</Text>
+        </View>
+      )}
+
       {/* NEWS SCROLLER */}
-      {data && (
+      {allNews && (
         <View className="flex-1">
           <ScrollView className="">
-            {data.articles.map(
-              (item, indx) =>
-                item.title !== "[Removed]" && (
-                  <NewsCard
-                    cardData={item}
-                    key={`Top_News_${indx}`}
-                    marginT={16}
-                    marginB={indx == data.articles.length - 1 ? 16 : 0}
-                  />
-                )
-            )}
+            {allNews.map((item, indx) => (
+              <NewsCard
+                cardData={item}
+                key={`Top_News_${indx}`}
+                marginT={indx == allNews[0] ? 0 : 16}
+                marginB={indx == allNews?.length - 1 ? 16 : 0}
+              />
+            ))}
           </ScrollView>
         </View>
       )}

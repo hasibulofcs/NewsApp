@@ -10,6 +10,7 @@ import BookmarksScreen from "../screens/BookmarksScreen";
 import TabBar from "../components/shared/TabBar";
 import { Provider } from "react-redux";
 import { store } from "../store/Store";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 SplashScreen.preventAutoHideAsync();
 
