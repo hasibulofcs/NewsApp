@@ -7,9 +7,19 @@ import HomeScreen from "../screens/HomeScreen";
 import ProfileScreen from "../screens/ProfileScreen";
 import TrendingScreen from "../screens/TrendingScreen";
 import BookmarksScreen from "../screens/BookmarksScreen";
-import TabBar from "../components/shared/TabBar";
 import { Provider } from "react-redux";
 import { store } from "../store/Store";
+import TabBarButton from "../components/shared/TabBarButton";
+import {
+  BookmarksIconBlack,
+  BookmarksIconWhite,
+  HomeIconBlack,
+  HomeIconWhite,
+  ProfileIconBlack,
+  ProfileIconWhite,
+  TrendingIconBlack,
+  TrendingIconWhite,
+} from "../assets/svgs/shared/Tabs";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -41,47 +51,59 @@ const _layout = () => {
 
   const Tab = createBottomTabNavigator();
 
+  const TabArr = [
+    {
+      route: "Home",
+      label: "Home",
+      icons: [HomeIconWhite, HomeIconBlack],
+      component: HomeScreen,
+    },
+    {
+      route: "Trending",
+      label: "Trending",
+      icons: [TrendingIconWhite, TrendingIconBlack],
+      component: TrendingScreen,
+    },
+    {
+      route: "Bookmarks",
+      label: "Bookmarks",
+      icons: [BookmarksIconWhite, BookmarksIconBlack],
+      component: BookmarksScreen,
+    },
+    {
+      route: "Profile",
+      label: "Profile",
+      icons: [ProfileIconWhite, ProfileIconBlack],
+      component: ProfileScreen,
+    },
+  ];
+
   return (
     <Provider store={store}>
       <NavigationContainer independent>
         <Tab.Navigator
-          tabBar={(props) => <TabBar {...props} />}
-          screenOptions={({ route }) => ({
-            tabBarShowLabel: false,
-          })}
+          screenOptions={{
+            headerShown: false,
+            tabBarStyle: {
+              height: 70,
+            },
+          }}
         >
-          <Tab.Screen
-            name="Home"
-            component={HomeScreen}
-            options={{
-              headerShown: false,
-              tabBarIcon: "Home",
-            }}
-          />
-          <Tab.Screen
-            name="Trending"
-            component={TrendingScreen}
-            options={{
-              headerShown: false,
-              tabBarIcon: "Trending",
-            }}
-          />
-          <Tab.Screen
-            name="Bookmarks"
-            component={BookmarksScreen}
-            options={{
-              headerShown: false,
-              tabBarIcon: "Bookmarks",
-            }}
-          />
-          <Tab.Screen
-            name="Profile"
-            component={ProfileScreen}
-            options={{
-              headerShown: false,
-              tabBarIcon: "Profile",
-            }}
-          />
+          {TabArr.map((item, index) => {
+            return (
+              <Tab.Screen
+                key={index}
+                name={item.route}
+                component={item.component}
+                options={{
+                  tabBarShowLabel: false,
+                  tabBarButton: (props) => (
+                    <TabBarButton {...props} item={item} />
+                  ),
+                }}
+              />
+            );
+          })}
         </Tab.Navigator>
       </NavigationContainer>
     </Provider>
