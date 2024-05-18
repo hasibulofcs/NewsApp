@@ -1,10 +1,4 @@
-import {
-  View,
-  Text,
-  Pressable,
-  ScrollView,
-  ActivityIndicator,
-} from "react-native";
+import { View, Text, Pressable, ActivityIndicator } from "react-native";
 import React, { useEffect, useState } from "react";
 import { FontStyles } from "../../constants/FontStyles";
 import NewsCard from "../shared/NewsCard";

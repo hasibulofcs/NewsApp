@@ -1,29 +1,12 @@
-import { SplashScreen } from "expo-router";
+import { SplashScreen, Stack } from "expo-router";
 import { useFonts } from "expo-font";
 import { useEffect } from "react";
-import { NavigationContainer } from "@react-navigation/native";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import HomeScreen from "../screens/HomeScreen";
-import ProfileScreen from "../screens/ProfileScreen";
-import TrendingScreen from "../screens/TrendingScreen";
-import BookmarksScreen from "../screens/BookmarksScreen";
 import { Provider } from "react-redux";
 import { store } from "../store/Store";
-import TabBarButton from "../components/shared/TabBarButton";
-import {
-  BookmarksIconBlack,
-  BookmarksIconWhite,
-  HomeIconBlack,
-  HomeIconWhite,
-  ProfileIconBlack,
-  ProfileIconWhite,
-  TrendingIconBlack,
-  TrendingIconWhite,
-} from "../assets/svgs/shared/Tabs";
 
 SplashScreen.preventAutoHideAsync();
 
-const _layout = () => {
+const RootLayout = () => {
   const [loaded, error] = useFonts({
     InterBlack: require("../assets/fonts/Inter-Black.ttf"),
     InterBold: require("../assets/fonts/Inter-Bold.ttf"),
@@ -49,65 +32,30 @@ const _layout = () => {
     return null;
   }
 
-  const Tab = createBottomTabNavigator();
-
-  const TabArr = [
-    {
-      route: "Home",
-      label: "Home",
-      icons: [HomeIconWhite, HomeIconBlack],
-      component: HomeScreen,
-    },
-    {
-      route: "Trending",
-      label: "Trending",
-      icons: [TrendingIconWhite, TrendingIconBlack],
-      component: TrendingScreen,
-    },
-    {
-      route: "Bookmarks",
-      label: "Bookmarks",
-      icons: [BookmarksIconWhite, BookmarksIconBlack],
-      component: BookmarksScreen,
-    },
-    {
-      route: "Profile",
-      label: "Profile",
-      icons: [ProfileIconWhite, ProfileIconBlack],
-      component: ProfileScreen,
-    },
-  ];
-
   return (
     <Provider store={store}>
-      <NavigationContainer independent>
-        <Tab.Navigator
-          screenOptions={{
+      <Stack>
+        <Stack.Screen
+          name="(tabs)"
+          options={{
             headerShown: false,
-            tabBarStyle: {
-              height: 70,
-            },
+            animation: "slide_from_right",
+            animationDuration: 500,
+            animationTypeForReplace: "push",
           }}
-        >
-          {TabArr.map((item, index) => {
-            return (
-              <Tab.Screen
-                key={index}
-                name={item.route}
-                component={item.component}
-                options={{
-                  tabBarShowLabel: false,
-                  tabBarButton: (props) => (
-                    <TabBarButton {...props} item={item} />
-                  ),
-                }}
-              />
-            );
-          })}
-        </Tab.Navigator>
-      </NavigationContainer>
+        />
+        <Stack.Screen
+          name="newsindetail"
+          options={{
+            headerShown: false,
+            animation: "slide_from_right",
+            animationDuration: 500,
+            animationTypeForReplace: "push",
+          }}
+        />
+      </Stack>
     </Provider>
   );
 };
 
-export default _layout;
+export default RootLayout;

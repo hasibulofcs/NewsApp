@@ -4,6 +4,8 @@ import BackgroundImage from "./BackgroundImage";
 import { FontStyles } from "../../constants/FontStyles";
 import { dateTimeStringToDate } from "../../hooks/DateConverter";
 import { PlaceholderImage } from "../../constants/Images";
+import { router } from "expo-router";
+import { useNavigation } from "@react-navigation/native";
 
 const NewsCard = ({
   cardData,
@@ -26,6 +28,12 @@ const NewsCard = ({
         marginBottom: marginB,
         width: isHorizontal ? 275 : "auto",
       }}
+      onPress={() =>
+        router.push({
+          pathname: `/newsindetail/${cardData?.title}`,
+          params: cardData?.title,
+        })
+      }
     >
       {!cardData?.urlToImage ? (
         <View className="overflow-hidden rounded-xl" style={{ height: 146 }}>
