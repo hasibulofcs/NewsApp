@@ -13,8 +13,10 @@ import Colors from "../../constants/Colors";
 
 const BreakingNews = () => {
   const [allNews, setAllNews] = useState([]);
-  const { refetch, error, isLoading, data } =
-    useGetTopNewsForAllCategoryQuery(20);
+  const { refetch, error, isLoading, data } = useGetTopNewsForAllCategoryQuery({
+    limit: 20,
+    start: 1,
+  });
 
   useEffect(() => {
     setAllNews(data?.articles.filter((item) => item.title !== "[Removed]"));
@@ -70,13 +72,19 @@ const BreakingNews = () => {
       {/* NEWS SCROLLER */}
       {allNews && (
         <View className="flex">
-          <ScrollView horizontal className="">
+          <ScrollView
+            horizontal
+            className=""
+            alwaysBounceHorizontal={true}
+            bounces={true}
+            showsHorizontalScrollIndicator={false}
+          >
             {allNews.map((item, indx) => (
               <NewsCard
                 cardData={item}
                 key={`Top_News_${indx}`}
-                marginT={indx == allNews[0] ? 0 : 16}
-                marginB={indx == allNews?.length - 1 ? 16 : 0}
+                marginS={indx == allNews[0] ? 16 : 12}
+                marginE={indx == allNews?.length - 1 ? 16 : 12}
                 isHorizontal={true}
               />
             ))}

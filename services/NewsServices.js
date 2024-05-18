@@ -6,8 +6,8 @@ export const newsApi = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: "https://newsapi.org/v2/" }),
   endpoints: (builder) => ({
     getTopNewsForAllCategory: builder.query({
-      query: (dataPerPage = 10) =>
-        `top-headlines?country=us&pageSize=${dataPerPage}&page=1&apiKey=${API_KEY}`,
+      query: ({ limit = 10, start = 1 }) =>
+        `top-headlines?country=us&pageSize=${limit}&page=${start}&apiKey=${API_KEY}`,
     }),
   }),
 });

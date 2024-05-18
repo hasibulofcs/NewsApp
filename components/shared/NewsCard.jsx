@@ -1,5 +1,5 @@
 import { Text, TouchableOpacity, View } from "react-native";
-import React from "react";
+import React, { useState } from "react";
 import BackgroundImage from "./BackgroundImage";
 import { FontStyles } from "../../constants/FontStyles";
 import { dateTimeStringToDate } from "../../hooks/DateConverter";
@@ -15,6 +15,17 @@ const NewsCard = ({
   marginE,
   isHorizontal,
 }) => {
+  const [isDisabled, setIsDisabled] = useState(false);
+
+  const handleNewsCardPress = () => {
+    router.push({
+      pathname: `/newsindetail/${cardData?.title}`,
+      params: cardData?.title,
+    });
+    setIsDisabled(true);
+    setTimeout(() => setIsDisabled(false), 2000);
+  };
+
   return (
     <TouchableOpacity
       activeOpacity={0.75}
@@ -28,12 +39,8 @@ const NewsCard = ({
         marginBottom: marginB,
         width: isHorizontal ? 275 : "auto",
       }}
-      onPress={() =>
-        router.push({
-          pathname: `/newsindetail/${cardData?.title}`,
-          params: cardData?.title,
-        })
-      }
+      disabled={isDisabled}
+      onPress={handleNewsCardPress}
     >
       {!cardData?.urlToImage ? (
         <View className="overflow-hidden rounded-xl" style={{ height: 146 }}>
@@ -49,7 +56,10 @@ const NewsCard = ({
         className="flex flex-row justify-between items-center"
         style={{ marginTop: 10 }}
       >
-        <Text style={FontStyles.InterMedium12} className="text-primary-blue">
+        <Text
+          style={FontStyles.InterMedium12}
+          className="text-primary-blue max-w-[180px]"
+        >
           {cardData?.author}
         </Text>
         <Text style={FontStyles.InterRegular12} className="text-slate-600">

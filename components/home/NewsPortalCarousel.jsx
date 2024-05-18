@@ -12,7 +12,7 @@ const CarousalItem = (index) => {
     <TouchableOpacity
       activeOpacity={0.75}
       className="flex-1 rounded-2xl overflow-hidden"
-      style={{ height: 170 }}
+      style={{ height: 170, marginStart: 8, marginEnd: 8 }}
     >
       <BackgroundImage source={NewPortalImages[index.index]} />
     </TouchableOpacity>

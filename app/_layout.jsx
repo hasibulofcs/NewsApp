@@ -48,9 +48,10 @@ const RootLayout = () => {
           name="newsindetail"
           options={{
             headerShown: false,
-            animation: "slide_from_right",
+            animation: "slide_from_bottom",
             animationDuration: 500,
             animationTypeForReplace: "push",
+            presentation: "modal",
           }}
         />
       </Stack>

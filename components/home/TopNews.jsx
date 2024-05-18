@@ -1,18 +1,39 @@
-import { View, Text, Pressable, ActivityIndicator } from "react-native";
+import {
+  View,
+  Text,
+  Pressable,
+  ActivityIndicator,
+  FlatList,
+} from "react-native";
 import React, { useEffect, useState } from "react";
 import { FontStyles } from "../../constants/FontStyles";
 import NewsCard from "../shared/NewsCard";
 import { useGetTopNewsForAllCategoryQuery } from "../../services/NewsServices";
 import Colors from "../../constants/Colors";
 
-const TopNews = () => {
-  const [allNews, setAllNews] = useState([]);
-  const { refetch, error, isLoading, data } =
-    useGetTopNewsForAllCategoryQuery(20);
+const initialLimit = 10;
+const initialStart = 0;
 
-  useEffect(() => {
-    setAllNews(data?.articles.filter((item) => item.title !== "[Removed]"));
-  }, [data]);
+const TopNews = ({ isLoading, error, allNews }) => {
+  // const [start, setStart] = useState(initialStart);
+  // const [allNews, setAllNews] = useState([]);
+  // const { refetch, error, isLoading, isFetching, data } =
+  //   useGetTopNewsForAllCategoryQuery({ limit: initialLimit, start });
+
+  // const handleRefresh = () => {
+  //   setStart(initialStart);
+  // };
+
+  // const handleEndReached = (entries) => {
+  //   console.log("End reached", entries);
+  //   if (allNews?.length === start + initialLimit) {
+  //     setStart((prev) => prev + initialLimit);
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   setAllNews(data?.articles.filter((item) => item.title !== "[Removed]"));
+  // }, [data]);
 
   return (
     <View className="flex-1">
@@ -62,7 +83,7 @@ const TopNews = () => {
       )}
 
       {/* NEWS SCROLLER */}
-      {allNews &&
+      {/* {allNews &&
         allNews.map((item, indx) => (
           <NewsCard
             cardData={item}
@@ -70,7 +91,28 @@ const TopNews = () => {
             marginT={indx == allNews[0] ? 0 : 16}
             marginB={indx == allNews?.length - 1 ? 16 : 0}
           />
-        ))}
+        ))} */}
+
+      {/* <FlatList
+        data={allNews}
+        keyExtractor={(item) => String(item.title)}
+        refreshing={isFetching}
+        onRefresh={handleRefresh}
+        onEndReached={handleEndReached}
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={{ gap: 16, paddingHorizontal: 0 }}
+        renderItem={({ item, indx }) => (
+          <NewsCard
+            cardData={item}
+            key={`Top_News_${indx}`}
+            marginT={indx == allNews[0] ? 0 : 16}
+            marginB={indx == allNews?.length - 1 ? 16 : 0}
+          />
+        )}
+        ListFooterComponent={() => (
+          <View>{isFetching && <ActivityIndicator size="small" />}</View>
+        )}
+      /> */}
     </View>
   );
 };
