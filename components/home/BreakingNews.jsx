@@ -2,8 +2,8 @@ import {
   View,
   Text,
   Pressable,
+  ScrollView,
   ActivityIndicator,
-  FlatList,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import { FontStyles } from "../../constants/FontStyles";
@@ -11,38 +11,25 @@ import NewsCard from "../shared/NewsCard";
 import { useGetTopNewsForAllCategoryQuery } from "../../services/NewsServices";
 import Colors from "../../constants/Colors";
 
-const initialLimit = 10;
-const initialStart = 0;
+const BreakingNews = () => {
+  const [allNews, setAllNews] = useState([]);
+  const { refetch, error, isLoading, data } = useGetTopNewsForAllCategoryQuery({
+    limit: 20,
+    start: 1,
+  });
 
-const TopNews = ({ isLoading, error, allNews }) => {
-  // const [start, setStart] = useState(initialStart);
-  // const [allNews, setAllNews] = useState([]);
-  // const { refetch, error, isLoading, isFetching, data } =
-  //   useGetTopNewsForAllCategoryQuery({ limit: initialLimit, start });
-
-  // const handleRefresh = () => {
-  //   setStart(initialStart);
-  // };
-
-  // const handleEndReached = (entries) => {
-  //   console.log("End reached", entries);
-  //   if (allNews?.length === start + initialLimit) {
-  //     setStart((prev) => prev + initialLimit);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   setAllNews(data?.articles.filter((item) => item.title !== "[Removed]"));
-  // }, [data]);
+  useEffect(() => {
+    setAllNews(data?.articles.filter((item) => item.title !== "[Removed]"));
+  }, [data]);
 
   return (
-    <View className="flex-1">
+    <View className="flex">
       <View className="flex flex-row justify-between items-center mx-4 my-5 text-white">
         <Text
           className="text-base text-tertiary-dark"
           style={FontStyles.InterSemiBold20}
         >
-          Top News
+          Breaking News
         </Text>
         <View style={{ overflow: "hidden", borderRadius: 8 }}>
           <Pressable android_ripple={{ color: "#0000002f" }} className="p-1">
@@ -83,38 +70,29 @@ const TopNews = ({ isLoading, error, allNews }) => {
       )}
 
       {/* NEWS SCROLLER */}
-      {/* {allNews &&
-        allNews.map((item, indx) => (
-          <NewsCard
-            cardData={item}
-            key={`Top_News_${indx}`}
-            marginT={indx == allNews[0] ? 0 : 16}
-            marginB={indx == allNews?.length - 1 ? 16 : 0}
-          />
-        ))} */}
-
-      {/* <FlatList
-        data={allNews}
-        keyExtractor={(item) => String(item.title)}
-        refreshing={isFetching}
-        onRefresh={handleRefresh}
-        onEndReached={handleEndReached}
-        showsVerticalScrollIndicator={false}
-        contentContainerStyle={{ gap: 16, paddingHorizontal: 0 }}
-        renderItem={({ item, indx }) => (
-          <NewsCard
-            cardData={item}
-            key={`Top_News_${indx}`}
-            marginT={indx == allNews[0] ? 0 : 16}
-            marginB={indx == allNews?.length - 1 ? 16 : 0}
-          />
-        )}
-        ListFooterComponent={() => (
-          <View>{isFetching && <ActivityIndicator size="small" />}</View>
-        )}
-      /> */}
+      {allNews && (
+        <View className="flex">
+          <ScrollView
+            horizontal
+            className=""
+            alwaysBounceHorizontal={true}
+            bounces={true}
+            showsHorizontalScrollIndicator={false}
+          >
+            {allNews.map((item, indx) => (
+              <NewsCard
+                cardData={item}
+                key={`Top_News_${indx}`}
+                marginS={indx == allNews[0] ? 16 : 12}
+                marginE={indx == allNews?.length - 1 ? 16 : 12}
+                isHorizontal={true}
+              />
+            ))}
+          </ScrollView>
+        </View>
+      )}
     </View>
   );
 };
 
-export default TopNews;
+export default BreakingNews;
