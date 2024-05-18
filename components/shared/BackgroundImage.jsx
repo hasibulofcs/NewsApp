@@ -1,9 +1,9 @@
 import { ImageBackground, StyleSheet } from "react-native";
 
-const BackgroundImage = ({ source, className, styleProperty }) => {
+const BackgroundImage = ({ source, className, styleProperty, remoteSrc }) => {
   return (
     <ImageBackground
-      source={source}
+      source={remoteSrc ? { uri: remoteSrc } : source}
       className={className}
       style={[styles.image, styleProperty]}
     />
