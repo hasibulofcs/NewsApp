@@ -1,17 +1,12 @@
-import { SplashScreen } from "expo-router";
+import { SplashScreen, Stack } from "expo-router";
 import { useFonts } from "expo-font";
 import { useEffect } from "react";
-import { NavigationContainer } from "@react-navigation/native";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import HomeScreen from "../screens/HomeScreen";
-import ProfileScreen from "../screens/ProfileScreen";
-import TrendingScreen from "../screens/TrendingScreen";
-import BookmarksScreen from "../screens/BookmarksScreen";
-import TabBar from "../components/shared/TabBar";
+import { Provider } from "react-redux";
+import { store } from "../store/Store";
 
 SplashScreen.preventAutoHideAsync();
 
-const _layout = () => {
+const RootLayout = () => {
   const [loaded, error] = useFonts({
     InterBlack: require("../assets/fonts/Inter-Black.ttf"),
     InterBold: require("../assets/fonts/Inter-Bold.ttf"),
@@ -37,51 +32,31 @@ const _layout = () => {
     return null;
   }
 
-  const Tab = createBottomTabNavigator();
-
   return (
-    <NavigationContainer independent>
-      <Tab.Navigator
-        tabBar={(props) => <TabBar {...props} />}
-        screenOptions={({ route }) => ({
-          tabBarShowLabel: false,
-        })}
-      >
-        <Tab.Screen
-          name="Home"
-          component={HomeScreen}
+    <Provider store={store}>
+      <Stack>
+        <Stack.Screen
+          name="(tabs)"
           options={{
             headerShown: false,
-            tabBarIcon: "Home",
+            animation: "slide_from_right",
+            animationDuration: 500,
+            animationTypeForReplace: "push",
           }}
         />
-        <Tab.Screen
-          name="Trending"
-          component={TrendingScreen}
+        <Stack.Screen
+          name="newsindetail"
           options={{
             headerShown: false,
-            tabBarIcon: "Trending",
+            animation: "slide_from_bottom",
+            animationDuration: 500,
+            animationTypeForReplace: "push",
+            presentation: "modal",
           }}
         />
-        <Tab.Screen
-          name="Bookmarks"
-          component={BookmarksScreen}
-          options={{
-            headerShown: false,
-            tabBarIcon: "Bookmarks",
-          }}
-        />
-        <Tab.Screen
-          name="Profile"
-          component={ProfileScreen}
-          options={{
-            headerShown: false,
-            tabBarIcon: "Profile",
-          }}
-        />
-      </Tab.Navigator>
-    </NavigationContainer>
+      </Stack>
+    </Provider>
   );
 };
 
-export default _layout;
+export default RootLayout;
