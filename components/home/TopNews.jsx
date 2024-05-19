@@ -88,8 +88,8 @@ const TopNews = ({ isLoading, error, allNews }) => {
           <NewsCard
             cardData={item}
             key={`Top_News_${indx}`}
-            marginT={indx == allNews[0] ? 0 : 16}
-            marginB={indx == allNews?.length - 1 ? 16 : 0}
+            marginTop={indx == allNews[0] ? 0 : 16}
+            marginBottom={indx == allNews?.length - 1 ? 16 : 0}
           />
         ))} */}
 
@@ -105,8 +105,8 @@ const TopNews = ({ isLoading, error, allNews }) => {
           <NewsCard
             cardData={item}
             key={`Top_News_${indx}`}
-            marginT={indx == allNews[0] ? 0 : 16}
-            marginB={indx == allNews?.length - 1 ? 16 : 0}
+            marginTop={indx == allNews[0] ? 0 : 16}
+            marginBottom={indx == allNews?.length - 1 ? 16 : 0}
           />
         )}
         ListFooterComponent={() => (

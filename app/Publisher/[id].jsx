@@ -67,8 +67,8 @@ const Publisher = () => {
               <NewsCard
                 cardData={item}
                 key={`Top_News_${indx}`}
-                marginT={indx == allPublisherNews[0] ? 0 : 16}
-                marginB={indx == allPublisherNews?.length - 1 ? 16 : 0}
+                marginTop={indx == allPublisherNews[0] ? 0 : 16}
+                marginBottom={indx == allPublisherNews?.length - 1 ? 16 : 0}
               />
             ))}
           </ScrollView>

@@ -8,10 +8,10 @@ import { router } from "expo-router";
 
 const NewsCard = ({
   cardData,
-  marginT,
-  marginB,
-  marginS,
-  marginE,
+  marginTop,
+  marginBottom,
+  marginStart,
+  marginEnd,
   isHorizontal,
 }) => {
   const [isDisabled, setIsDisabled] = useState(false);
@@ -32,10 +32,10 @@ const NewsCard = ({
         isHorizontal ? "p-0 bg-transparent" : "p-4 bg-white"
       }`}
       style={{
-        marginStart: marginS,
-        marginTop: marginT,
-        marginEnd: marginE,
-        marginBottom: marginB,
+        marginStart: marginStart,
+        marginTop: marginTop,
+        marginEnd: marginEnd,
+        marginBottom: marginBottom,
         width: isHorizontal ? 275 : "auto",
       }}
       disabled={isDisabled}
