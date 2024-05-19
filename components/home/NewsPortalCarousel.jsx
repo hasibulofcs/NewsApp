@@ -2,19 +2,35 @@ import { Dimensions, TouchableOpacity, View } from "react-native";
 import Carousel from "react-native-reanimated-carousel";
 import { useRef, useState } from "react";
 import BackgroundImage from "../shared/BackgroundImage";
-import { NewPortalImages } from "../../constants/Images";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { PublishersData } from "../../data/Publisher";
+import { router } from "expo-router";
 
 const PAGE_WIDTH = Dimensions.get("window").width;
 
 const CarousalItem = (index) => {
+  const [isDisabled, setIsDisabled] = useState(false);
+  const item = index;
+
+  const carouselItemPressHandler = (id) => {
+    router.push({
+      pathname: `/Publisher/${id}`,
+      params: id,
+    });
+
+    setIsDisabled(true);
+    setTimeout(() => setIsDisabled(false), 2000);
+  };
+
   return (
     <TouchableOpacity
       activeOpacity={0.75}
       className="flex-1 rounded-2xl overflow-hidden"
       style={{ height: 170, marginStart: 8, marginEnd: 8 }}
+      onPress={() => carouselItemPressHandler(item.index)}
+      disabled={isDisabled}
     >
-      <BackgroundImage source={NewPortalImages[index.index]} />
+      <BackgroundImage source={PublishersData[item.index]?.image} />
     </TouchableOpacity>
   );
 };

@@ -8,18 +8,20 @@ import {
 import React, { useEffect, useState } from "react";
 import { FontStyles } from "../../constants/FontStyles";
 import NewsCard from "../shared/NewsCard";
-import { useGetTopNewsForAllCategoryQuery } from "../../services/NewsServices";
+import { useGetBreakingNewsForAllCategoryQuery } from "../../services/NewsServices";
 import Colors from "../../constants/Colors";
 
 const BreakingNews = () => {
   const [allNews, setAllNews] = useState([]);
-  const { refetch, error, isLoading, data } = useGetTopNewsForAllCategoryQuery({
-    limit: 20,
-    start: 1,
-  });
+  const { refetch, error, isLoading, data } =
+    useGetBreakingNewsForAllCategoryQuery({ limit: 10, start: 1 });
 
   useEffect(() => {
-    setAllNews(data?.articles.filter((item) => item.title !== "[Removed]"));
+    setAllNews(
+      data?.articles.filter(
+        (item) => item.title !== "[Removed]" && item.urlToImage !== null
+      )
+    );
   }, [data]);
 
   return (
@@ -82,9 +84,9 @@ const BreakingNews = () => {
             {allNews.map((item, indx) => (
               <NewsCard
                 cardData={item}
-                key={`Top_News_${indx}`}
-                marginS={indx == allNews[0] ? 16 : 12}
-                marginE={indx == allNews?.length - 1 ? 16 : 12}
+                key={`Breaking_News_${indx}`}
+                marginStart={indx == allNews[0] ? 16 : 12}
+                marginEnd={indx == allNews?.length - 1 ? 16 : 12}
                 isHorizontal={true}
               />
             ))}

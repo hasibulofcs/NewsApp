@@ -1,5 +1,5 @@
 import { View, Text, ScrollView, ToastAndroid, Pressable } from "react-native";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useLocalSearchParams } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Header from "../../components/shared/Header";
@@ -17,20 +17,32 @@ const NewsInDetail = () => {
   const [shareIsDisabled, setShareIsDisabled] = useState(false);
   const bookmarkButtonRef = useRef(null);
   const shareButtonRef = useRef(null);
+  const [appData, setAppData] = useState([]);
+  const [page, setPage] = useState(1);
+  const itemsPerPage = 10;
 
+  {
+    /** TODO: The RTK use-Query will be different based upon the route parameter when from breaking news it'll neewd to fetch data for breaking news. Only for top news is implemented here **/
+  }
   const { refetch, error, isLoading, data } = useGetTopNewsForAllCategoryQuery(
-    undefined,
+    { limit: itemsPerPage, start: page },
     {
       selectFromResult: ({ refetch, error, isLoading, data }) => ({
         refetch,
         error,
         isLoading,
-        data: data?.articles
-          ?.filter((item) => item.title !== "[Removed]")
-          .find((item) => item.title === title),
+        data: data,
       }),
     }
   );
+
+  useEffect(() => {
+    setAppData(
+      data?.articles
+        ?.filter((item) => item.title !== "[Removed]")
+        .find((item) => item.title === title)
+    );
+  }, []);
 
   const handleBookmarkPress = () => {
     ToastAndroid.show("This feature is under development!", ToastAndroid.SHORT);
@@ -51,12 +63,12 @@ const NewsInDetail = () => {
         <View className="flex-1 mx-4 my-[46px]">
           <ScrollView>
             {/* CONTEXT IMAGE */}
-            {data?.urlToImage ? (
+            {appData?.urlToImage ? (
               <View
                 className="overflow-hidden rounded-xl"
                 style={{ height: 184 }}
               >
-                <BackgroundImage remoteSrc={data?.urlToImage} />
+                <BackgroundImage remoteSrc={appData?.urlToImage} />
               </View>
             ) : (
               <View
@@ -76,7 +88,7 @@ const NewsInDetail = () => {
                 style={FontStyles.InterRegular12}
                 className="text-slate-600"
               >
-                {dateTimeStringToDate(data?.publishedAt)}
+                {dateTimeStringToDate(appData?.publishedAt)}
               </Text>
               <View className="flex flex-row items-center gap-x-6">
                 {/* BOOKMARK */}
@@ -111,7 +123,7 @@ const NewsInDetail = () => {
               style={FontStyles.InterMedium12}
               className="text-primary-blue mt-3"
             >
-              {data?.author}
+              {appData?.author}
             </Text>
 
             {/* TITLE */}
@@ -127,7 +139,7 @@ const NewsInDetail = () => {
               style={FontStyles.InterRegular12}
               className="text-slate-500 uppercase mt-6"
             >
-              {data?.content}
+              {appData?.content}
             </Text>
           </ScrollView>
         </View>
