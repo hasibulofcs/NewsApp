@@ -45,7 +45,17 @@ const RootLayout = () => {
           }}
         />
         <Stack.Screen
-          name="newsindetail"
+          name="NewsInDetail"
+          options={{
+            headerShown: false,
+            animation: "slide_from_bottom",
+            animationDuration: 500,
+            animationTypeForReplace: "push",
+            presentation: "modal",
+          }}
+        />
+        <Stack.Screen
+          name="Publisher"
           options={{
             headerShown: false,
             animation: "slide_from_bottom",

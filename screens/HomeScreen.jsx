@@ -17,24 +17,25 @@ const HomeScreen = () => {
   const itemsPerPage = 10;
 
   // const allNews = useSelector((state) => state.topNewses.value);
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
   const { refetch, error, isLoading, isFetching, data } =
-    useGetTopNewsForAllCategoryQuery(
-      { limit: itemsPerPage, start: page },
-      { skip: page === 0 }
-    );
+    useGetTopNewsForAllCategoryQuery({ limit: itemsPerPage, start: page });
 
   // TEMP
 
-  const loadMore = () => {
-    if (!isFetching) {
-      setPage((prevPage) => prevPage + 1);
-    }
-  };
+  // const loadMore = () => {
+  //   if (!isFetching) {
+  //     setPage((prevPage) => prevPage + 1);
+  //   }
+  // };
 
   useEffect(() => {
-    setAllNews(data?.articles.filter((item) => item.title !== "[Removed]"));
+    setAllNews(
+      data?.articles.filter(
+        (item) => item.title !== "[Removed]" && item.urlToImage !== null
+      )
+    );
     // dispatch(save(data?.articles.filter((item) => item.title !== "[Removed]")));
   }, [data]);
   // TEMP
@@ -55,16 +56,15 @@ const HomeScreen = () => {
             data={allNews}
             keyExtractor={(item) => String(item.title)}
             refreshing={isFetching}
-            onEndReached={loadMore}
-            onEndReachedThreshold={0.5}
+            // onEndReached={loadMore}
+            onEndReachedThreshold={1}
             showsVerticalScrollIndicator={false}
-            contentContainerStyle={{ gap: 16, paddingHorizontal: 0 }}
             renderItem={({ item, indx }) => (
               <NewsCard
                 cardData={item}
                 key={`Top_News_${indx}`}
-                marginT={indx == allNews[0] ? 0 : 16}
-                marginB={indx == allNews?.length - 1 ? 16 : 0}
+                marginTop={indx == allNews[0] ? 0 : 8}
+                marginBottom={indx == allNews?.length - 1 ? 16 : 8}
               />
             )}
             ListHeaderComponent={() => (

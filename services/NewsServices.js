@@ -6,10 +6,22 @@ export const newsApi = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: "https://newsapi.org/v2/" }),
   endpoints: (builder) => ({
     getTopNewsForAllCategory: builder.query({
+      query: ({ limit = 10, start = 1, country = "us", category = "" }) =>
+        `top-headlines?country=${country}&pageSize=${limit}&page=${start}&apiKey=${API_KEY}`,
+    }),
+    getBreakingNewsForAllCategory: builder.query({
       query: ({ limit = 10, start = 1 }) =>
-        `top-headlines?country=us&pageSize=${limit}&page=${start}&apiKey=${API_KEY}`,
+        `top-headlines?sources=bbc-news&pageSize=${limit}&page=${start}&apiKey=${API_KEY}`,
+    }),
+    getPublisherWiseNews: builder.query({
+      query: (name) => `top-headlines?sources=${name}&apiKey=${API_KEY}`,
     }),
   }),
 });
 
-export const { useGetTopNewsForAllCategoryQuery } = newsApi;
+export const {
+  useGetTopNewsForAllCategoryQuery,
+  useGetBreakingNewsForAllCategoryQuery,
+  useGetPublisherWiseNewsQuery,
+  useGet,
+} = newsApi;
