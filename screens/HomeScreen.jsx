@@ -14,15 +14,15 @@ import { save } from "../services/NewsSlice";
 const HomeScreen = () => {
   const [allNews, setAllNews] = useState([]);
   const [page, setPage] = useState(1);
-  const itemsPerPage = 10;
+  const itemsPerPage = 3;
 
   // const allNews = useSelector((state) => state.topNewses.value);
   const dispatch = useDispatch();
 
   const { refetch, error, isLoading, isFetching, data } =
     useGetTopNewsForAllCategoryQuery(
-      { limit: itemsPerPage, start: page },
-      { skip: page === 0 }
+      { limit: itemsPerPage, start: page }
+      // { skip: page === 0 }
     );
 
   // TEMP

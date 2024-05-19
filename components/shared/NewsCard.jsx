@@ -5,7 +5,6 @@ import { FontStyles } from "../../constants/FontStyles";
 import { dateTimeStringToDate } from "../../hooks/DateConverter";
 import { PlaceholderImage } from "../../constants/Images";
 import { router } from "expo-router";
-import { useNavigation } from "@react-navigation/native";
 
 const NewsCard = ({
   cardData,
@@ -19,7 +18,7 @@ const NewsCard = ({
 
   const handleNewsCardPress = () => {
     router.push({
-      pathname: `/newsindetail/${cardData?.title}`,
+      pathname: `/NewsInDetail/${cardData?.title}`,
       params: cardData?.title,
     });
     setIsDisabled(true);
@@ -29,7 +28,7 @@ const NewsCard = ({
   return (
     <TouchableOpacity
       activeOpacity={0.75}
-      className={`rounded-2xl mx-4 ${
+      className={`rounded-2xl shadow-sm mx-4 ${
         isHorizontal ? "p-0 bg-transparent" : "p-4 bg-white"
       }`}
       style={{
