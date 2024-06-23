@@ -36,7 +36,7 @@ const RootLayout = () => {
     <Provider store={store}>
       <Stack>
         <Stack.Screen
-          name="(tabs)"
+          name="(Tabs)"
           options={{
             headerShown: false,
             animation: "slide_from_right",
